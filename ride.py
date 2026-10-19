@@ -103,7 +103,7 @@ if "🟢" in model_status:
     dl_features_scaled = scaler.transform(dl_features)
     X_lstm_query = np.reshape(dl_features_scaled, (1, 1, 5))
 
-    predicted_eta = float(lstm_model.predict(X_lstm_query, verbose=0))
+    predicted_eta = float(lstm_model.predict(X_lstm_query, verbose=0).flatten()[0])
     predicted_eta = max(1.0, round(predicted_eta, 1)) # Safety clip bounds
 
     # Inject computed real-time ETA feature back into ML pipeline input vector
