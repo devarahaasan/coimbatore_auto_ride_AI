@@ -110,7 +110,7 @@ if "🟢" in model_status:
     X_query['ETA_minutes'] = predicted_eta
 
     # 7. RUN MACHINE LEARNING MODEL STEPS: MODULE 1 (SURGE & CANCELLATION)
-    predicted_surge = float(lr_model.predict(X_query))
+    predicted_surge = float(lr_model.predict(X_query)[0])
     predicted_surge = max(1.0, min(2.2, round(predicted_surge, 2))) # Strict business boundaries
 
     # Base auto fare logic matching Coimbatore input specifications
@@ -127,7 +127,7 @@ if "🟢" in model_status:
     final_computed_fare = round(base_fare * predicted_surge, 2)
 
     # Classification Step: Predict Cancellation Risk Probability
-    cancellation_probability = float(rf_clf.predict_proba(X_query)[:, 1])
+    cancellation_probability = float(rf_clf.predict_proba(X_query)[0, 1])
 
     # 8. INJECT INTERACTIVE METRIC VALUES ON STREAMLIT DASHBOARD
     with col1:
